@@ -12,12 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table( name = "Bonds" )
 public class Bond {
-	
-	Integer IdItem;
+	//https://stackoverflow.com/questions/50567041/spring-boot-jpa-unknown-column-in-field-list
 		
 		@Id
 		@Column(name = "TransactionId")
 		@GeneratedValue(strategy=GenerationType.AUTO)
+		Integer IdItem;
+
 	    public Integer getIdItem() {
 			return IdItem;
 		}
@@ -25,14 +26,28 @@ public class Bond {
 			IdItem = idItem;
 		}
 		
+		@Column(name = "Bond_No")
+		Integer BondNumber;	
 		
-	   Integer BondNumber;	
+		@Column(name = "nextPaymentDate")
 	   Date NextPaymentDate;
+		
+		@Column(name = "bondCurrency")
 	   String BondCurrency;
+		
+		@Column(name = "itemEntered")
 	   Date ItemEntered;
+		
+		@Column(name = "bankBuy")
 	   Double BankBuy;
+		
+		@Column(name = "bankSell")
 	   Double BankSell;
+		
+		@Column(name = "interestRate")
 	   Double InterestRate;
+		
+		@Column(name = "endOfBond")
 	   Date EndOfBond;
 
 
