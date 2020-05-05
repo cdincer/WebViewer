@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Hello World</h1>
+<div class="container">
+	<h3>Employee Directory</h3>
+	<hr>
+
+	<table border="1" class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Bond Number</th>
+				<th>Next Payment Date</th>
+				<th>Bond Currency</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempEmployee : ${employees}">
+			
+				<td th:text="${tempEmployee.BondNumber}" />	
+				<td th:text="${tempEmployee.NextPaymentDate}" />	
+				<td th:text="${tempEmployee.BondCurrency}" />	
+			
+			
+			</tr>
+		</tbody>		
+	</table>
+	
+	
+	</div>
+	
+
+
 </body>
 </html>
