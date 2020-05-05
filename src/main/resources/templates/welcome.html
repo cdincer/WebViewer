@@ -16,15 +16,25 @@
 				<th>Bond Number</th>
 				<th>Next Payment Date</th>
 				<th>Bond Currency</th>
+				<th>Interest Rate</th>
+				<th>Bank Sell</th>
+			    <th>Bank Buy</th>
+				<th>Item Entered</th>
+				
+				
 			</tr>
 		</thead>
 		
 		<tbody>
-			<tr th:each="tempEmployee : ${employees}">
+			<tr th:each="myBond : ${Bonds}">
 			
-				<td th:text="${tempEmployee.BondNumber}" />	
-				<td th:text="${tempEmployee.NextPaymentDate}" />	
-				<td th:text="${tempEmployee.BondCurrency}" />	
+				<td th:text="${myBond.BondNumber}" />	
+				<td th:text="${myBond.NextPaymentDate}" />	
+				<td th:text="${myBond.BondCurrency}" />	
+				<td th:text="${myBond.InterestRate}" />	
+				<td th:text="${myBond.BankSell}" />	
+				<td th:text="${myBond.BankBuy}" />	
+				<td th:text="${myBond.ItemEntered}" />	
 			
 			
 			</tr>

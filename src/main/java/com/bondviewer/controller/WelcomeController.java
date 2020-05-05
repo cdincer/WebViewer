@@ -29,7 +29,7 @@ class WelcomeController {
 	List<Bond> employeeList = MBondService.findAll();
 		
 		// add to the spring model
-		theModel.addAttribute("employees", employeeList);
+		theModel.addAttribute("Bonds", employeeList);
 		
 
 		return "welcome";
