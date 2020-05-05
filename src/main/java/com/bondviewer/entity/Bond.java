@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table( name = "Bonds" )
 public class Bond {
-	//https://stackoverflow.com/questions/50567041/spring-boot-jpa-unknown-column-in-field-list
 		
 		@Id
 		@Column(name = "TransactionId")

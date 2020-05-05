@@ -1,10 +1,12 @@
 package com.bondviewer.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,11 @@ public class BondServiceImpl implements BondService {
 	public List<Bond> findMinMax() {
 		List<Bond> Items = myBondRepository.findAll();
 		List<Bond> Filtered = new ArrayList<Bond>();
+		//max
 		HashMap<Integer, Bond> Returned = new HashMap<Integer, Bond>();
+		//min
+		HashMap<Integer, Bond> Returned2 = new HashMap<Integer, Bond>();
+
 		Bond Comparison = new Bond();
 		double low, high;
 		Integer tempbondNo;
@@ -37,14 +43,14 @@ public class BondServiceImpl implements BondService {
 
 		// max
 		for (Bond Item : Items) {
-			low = Item.getBankSell();
+			high = Item.getBankSell();
 			tempbondNo = Item.getBondNumber();
 
 			if (!Returned.containsKey(tempbondNo))
 				Returned.put(tempbondNo, Item);
 			else {
 				Comparison = Returned.get(tempbondNo);
-				if (low > Comparison.getBankSell()) {
+				if (high > Comparison.getBankSell()) {
 				 Returned.remove(Comparison.getBondNumber(), Comparison);
 				 Returned.put(Item.getBondNumber(),Item);
 				}
@@ -53,8 +59,33 @@ public class BondServiceImpl implements BondService {
 
 		}
 		
+		
+		//min
+		for (Bond Item : Items) {
+			low = Item.getBankSell();
+			tempbondNo = Item.getBondNumber();
+
+			if (!Returned2.containsKey(tempbondNo))
+				Returned2.put(tempbondNo, Item);
+			else {
+				Comparison = Returned2.get(tempbondNo);
+				if (low < Comparison.getBankSell()) {
+					Returned2.remove(Comparison.getBondNumber(), Comparison);
+					Returned2.put(Item.getBondNumber(),Item);
+				}
+
+			}
+
+		}
+		
+		
 		 Items = new ArrayList<Bond>();
 		   for(Map.Entry<Integer,Bond> item : Returned.entrySet())
+		   {
+			   Items.add(item.getValue());
+		   }
+		   
+		   for(Map.Entry<Integer,Bond> item : Returned2.entrySet())
 		   {
 			   Items.add(item.getValue());
 		   }
@@ -69,19 +100,32 @@ public class BondServiceImpl implements BondService {
 
 	@Override
 	public Bond findById(int theId) {
-		// TODO Auto-generated method stub
-		return null;
+		//Optional means different pattern instead of having to check for nulls 
+		//Feature introduced in Java 8
+		Optional<Bond> result = myBondRepository.findById(theId);
+		
+		Bond myBond= null;
+		if(result.isPresent())
+		{
+			myBond = result.get();
+		}
+		else
+		{
+			throw new RuntimeException("Did not find employee id -" + theId);
+		}
+		
+		return myBond;
 	}
 
 	@Override
-	public void save(Bond theEmployee) {
-		// TODO Auto-generated method stub
+	public void save(Bond theBond) {
+		myBondRepository.save(theBond);
 
 	}
 
 	@Override
 	public void deleteById(int theId) {
-		// TODO Auto-generated method stub
+		myBondRepository.deleteById(theId);
 
 	}
 
