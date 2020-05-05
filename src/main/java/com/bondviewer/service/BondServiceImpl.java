@@ -2,7 +2,9 @@ package com.bondviewer.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,27 +25,39 @@ public class BondServiceImpl implements BondService {
 		myBondRepository = theBondRepository;
 	}
 
+	@Override
 	public List<Bond> findMinMax() {
 		List<Bond> Items = myBondRepository.findAll();
 		List<Bond> Filtered = new ArrayList<Bond>();
 		HashMap<Integer, Bond> Returned = new HashMap<Integer, Bond>();
-
+		Bond Comparison = new Bond();
 		double low, high;
-		Integer TempBond;
+		Integer tempbondNo;
 		low = high = 0;
 
-		// min
+		// max
 		for (Bond Item : Items) {
 			low = Item.getBankSell();
-			TempBond = Item.getBondNumber();
+			tempbondNo = Item.getBondNumber();
 
-			if (!Returned.containsKey(TempBond))
-				Returned.put(TempBond, Item);
+			if (!Returned.containsKey(tempbondNo))
+				Returned.put(tempbondNo, Item);
 			else {
+				Comparison = Returned.get(tempbondNo);
+				if (low > Comparison.getBankSell()) {
+				 Returned.remove(Comparison.getBondNumber(), Comparison);
+				 Returned.put(Item.getBondNumber(),Item);
+				}
 
 			}
 
 		}
+		
+		 Items = new ArrayList<Bond>();
+		   for(Map.Entry<Integer,Bond> item : Returned.entrySet())
+		   {
+			   Items.add(item.getValue());
+		   }
 
 		return Items;
 	}

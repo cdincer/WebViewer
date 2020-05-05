@@ -10,5 +10,6 @@ public interface BondService {
 	public Bond findById(int theId);
 	public void save(Bond theEmployee);
 	public void deleteById(int theId);
+	public List<Bond> findMinMax();
 
 }
