@@ -30,7 +30,7 @@ public class BondServiceImpl implements BondService {
 	@Override
 	public List<Bond> findMinMax() {
 		List<Bond> Items = myBondRepository.findAll();
-		List<Bond> Filtered = new ArrayList<Bond>();
+
 		//max
 		HashMap<Integer, Bond> Returned = new HashMap<Integer, Bond>();
 		//min
@@ -82,12 +82,44 @@ public class BondServiceImpl implements BondService {
 		 Items = new ArrayList<Bond>();
 		   for(Map.Entry<Integer,Bond> item : Returned.entrySet())
 		   {
+			   
 			   Items.add(item.getValue());
 		   }
 		   
 		   for(Map.Entry<Integer,Bond> item : Returned2.entrySet())
 		   {
 			   Items.add(item.getValue());
+		   }
+		   
+		   Bond[] BondArray = new Bond[Items.size()];
+		   int x=0;
+		   for(Bond Item:Items)
+		   {
+			   BondArray[x]=Item;
+			   x++;
+		   }
+		    boolean sorted = false;
+		   Bond temp = new Bond();
+		 
+		    while (!sorted) {
+		        sorted = true;
+		        for (int i = 0; i < BondArray.length - 1; i++) {
+		            if (BondArray[i].getBondNumber() > BondArray[i+1].getBondNumber()) {
+		                temp = BondArray[i];
+		                BondArray[i] = BondArray[i+1];
+		                BondArray[i+1] = temp;
+		                sorted = false;
+		            }
+		        }
+		    }
+		   
+		   
+		   
+		   Items.clear();
+		   for(int i=0;i<BondArray.length;i++)
+		   {
+			   Items.add(BondArray[i]);
+
 		   }
 
 		return Items;
